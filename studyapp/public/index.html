@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School OS — Study Drills</title>
+  <style>
+    :root {
+      --navy: #1a2744;
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --teal: #0d9488;
+      --green: #16a34a;
+      --green-soft: #f0fdf4;
+      --red: #dc2626;
+      --red-soft: #fef2f2;
+      --border: #e5e7eb;
+      --bg: #f3f4f6;
+      --text: #111827;
+      --gray: #6b7280;
+      --card-shadow: 0 16px 40px rgba(26, 39, 68, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--navy) 0%, #2d4a9e 100%);
+      color: white;
+      padding: 24px 20px 28px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .header-shell {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.9;
+      max-width: 560px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .card h2,
+    .card h3 {
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+
+    .subtle {
+      color: var(--gray);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      font: inherit;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .option-btn,
+    .list-btn {
+      width: 100%;
+      padding: 14px 16px;
+    }
+
+    .primary-btn {
+      background: var(--blue);
+      color: white;
+      font-weight: 700;
+    }
+
+    .primary-btn:hover {
+      background: var(--blue-dark);
+    }
+
+    .secondary-btn {
+      background: white;
+      color: var(--text);
+      border: 2px solid var(--border);
+      font-weight: 600;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .set-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: white;
+    }
+
+    .set-card h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 10px 0 14px;
+    }
+
+    .pill {
+      background: #eff6ff;
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--blue);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      background: var(--navy);
+    }
+
+    .tag.alt {
+      background: var(--teal);
+    }
+
+    .question-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: white;
+      color: var(--text);
+      border: 2px solid var(--border);
+      text-align: left;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: #eff6ff;
+      border-color: var(--blue);
+    }
+
+    .option-btn.correct {
+      background: var(--green-soft);
+      border-color: var(--green);
+      color: #166534;
+    }
+
+    .option-btn.wrong {
+      background: var(--red-soft);
+      border-color: var(--red);
+      color: #991b1b;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-letter {
+      flex-shrink: 0;
+      width: 20px;
+      font-weight: 800;
+    }
+
+    .feedback {
+      display: none;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-top: 16px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .feedback.correct {
+      display: block;
+      background: var(--green-soft);
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+
+    .feedback.wrong {
+      display: block;
+      background: var(--red-soft);
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+
+    .feedback strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .feedback .explanation {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: #374151;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .score-hero {
+      background: linear-gradient(135deg, var(--navy), #2d4a9e);
+      color: white;
+      border-radius: 18px;
+      padding: 28px;
+      text-align: center;
+      margin-bottom: 18px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .score-number {
+      font-size: 58px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .score-copy {
+      margin-top: 10px;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .row-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: minmax(100px, 1fr) minmax(120px, 2fr) auto;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .metric-row strong {
+      font-size: 13px;
+    }
+
+    .metric-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .metric-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 999px;
+    }
+
+    .review-item,
+    .recent-item,
+    .insight-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: white;
+    }
+
+    .review-item h4,
+    .recent-item h4,
+    .insight-item h4 {
+      color: var(--navy);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .review-item p,
+    .recent-item p,
+    .insight-item p {
+      font-size: 13px;
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat-chip {
+      border-radius: 14px;
+      background: #eff6ff;
+      padding: 14px;
+    }
+
+    .stat-chip .value {
+      display: block;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .stat-chip .label {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--gray);
+      font-weight: 700;
+    }
+
+    .overall-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .overall-stat {
+      border-radius: 14px;
+      background: #eff6ff;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .overall-stat .value {
+      display: block;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .overall-stat .label {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--gray);
+      font-weight: 700;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    @media (max-width: 640px) {
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .card,
+      .score-hero {
+        padding: 18px;
+      }
+
+      .overall-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-shell">
+      <div class="eyebrow">Local Study Drill</div>
+      <h1>School OS — Study Drills</h1>
+      <p>Question sets come from the local API. Drill one set at a time, review misses, and track accuracy across sessions.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="screen active" id="homeScreen">
+      <div class="container">
+        <div class="card">
+          <h2>Choose a Question Set</h2>
+          <p class="subtle">Start a drill from any imported quiz set, or jump to Progress to see cumulative accuracy and recent attempts.</p>
+          <div class="actions">
+            <button class="secondary-btn" id="progressNavBtn" type="button">View Progress</button>
+          </div>
+          <div class="status" id="homeStatus">Loading question sets...</div>
+          <div class="list" id="setList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="quizScreen">
+      <div class="container">
+        <div class="quiz-header">
+          <span id="questionCounter">Question 1 of 1</span>
+          <span id="runningScore">Score: 0</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="quizProgress"></div>
+        </div>
+        <div class="card">
+          <div class="tag-row" id="questionTags"></div>
+          <div class="question-text" id="questionStem"></div>
+          <div class="options" id="optionsList"></div>
+          <div class="feedback" id="feedbackBox"></div>
+          <div class="actions">
+            <button class="primary-btn" id="nextQuestionBtn" type="button" style="display:none;">Next Question</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="resultsScreen">
+      <div class="container">
+        <div class="score-hero">
+          <div class="score-number" id="finalScore">0/0</div>
+          <div class="score-copy" id="finalPercent">0%</div>
+        </div>
+        <div class="card">
+          <h3>Quick Stats</h3>
+          <div class="stat-grid" id="attemptTimingStats"></div>
+          <div class="row-list" id="attemptDifficultyRows"></div>
+        </div>
+        <div class="card">
+          <h3>By Topic For This Attempt</h3>
+          <div class="row-list" id="attemptTopicRows"></div>
+        </div>
+        <div class="card">
+          <h3>Missed Questions</h3>
+          <div class="row-list" id="missedQuestions"></div>
+        </div>
+        <div class="actions">
+          <button class="primary-btn" id="retrySetBtn" type="button">Retry Set</button>
+          <button class="secondary-btn" id="backHomeBtn" type="button">Back Home</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="progressScreen">
+      <div class="container">
+        <div class="card">
+          <h2>Progress</h2>
+          <p class="subtle">All analytics are pulled from the local REST API and aggregated across saved attempts.</p>
+          <div class="actions">
+            <button class="secondary-btn" id="progressHomeBtn" type="button">Back Home</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Overall</h3>
+          <div class="overall-grid" id="overallGrid"></div>
+        </div>
+        <div class="card">
+          <h3>Accuracy by Topic</h3>
+          <div class="row-list" id="topicAnalytics"></div>
+        </div>
+        <div class="card">
+          <h3>Accuracy by Type</h3>
+          <div class="row-list" id="typeAnalytics"></div>
+        </div>
+        <div class="card">
+          <h3>Insights</h3>
+          <div class="row-list" id="insightsPanel"></div>
+        </div>
+        <div class="card">
+          <h3>Recent Attempts</h3>
+          <div class="row-list" id="recentAttempts"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const state = {
+      quizSets: [],
+      currentSet: null,
+      currentAttemptId: null,
+      currentQuestionIndex: 0,
+      currentQuestionStartedAt: 0,
+      answeredCurrentQuestion: false,
+      selectedResponses: [],
+      finalResult: null
+    };
+
+    const screens = {
+      home: document.getElementById('homeScreen'),
+      quiz: document.getElementById('quizScreen'),
+      results: document.getElementById('resultsScreen'),
+      progress: document.getElementById('progressScreen')
+    };
+
+    document.getElementById('progressNavBtn').addEventListener('click', showProgress);
+    document.getElementById('progressHomeBtn').addEventListener('click', () => showScreen('home'));
+    document.getElementById('backHomeBtn').addEventListener('click', async () => {
+      showScreen('home');
+      await loadQuizSets();
+    });
+    document.getElementById('retrySetBtn').addEventListener('click', () => {
+      if (state.currentSet) {
+        startDrill(state.currentSet.id);
+      }
+    });
+    document.getElementById('nextQuestionBtn').addEventListener('click', nextQuestion);
+
+    function showScreen(name) {
+      Object.entries(screens).forEach(([key, element]) => {
+        element.classList.toggle('active', key === name);
+      });
+    }
+
+    async function apiFetch(path, options = {}) {
+      const response = await fetch(path, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        ...options
+      });
+
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(body.error || 'Request failed');
+      }
+      return body;
+    }
+
+    function formatDate(isoString) {
+      if (!isoString) {
+        return 'Unspecified';
+      }
+      return new Date(isoString).toLocaleString();
+    }
+
+    function pct(value) {
+      return `${Math.round((value || 0) * 100)}%`;
+    }
+
+    async function loadQuizSets() {
+      const status = document.getElementById('homeStatus');
+      const list = document.getElementById('setList');
+      status.textContent = 'Loading question sets...';
+      list.innerHTML = '';
+
+      try {
+        const sets = await apiFetch('/api/quiz-sets');
+        state.quizSets = sets;
+
+        if (sets.length === 0) {
+          status.textContent = 'No question sets yet — generate one with the agent.';
+          return;
+        }
+
+        status.textContent = `${sets.length} question set${sets.length === 1 ? '' : 's'} available`;
+        list.innerHTML = '';
+
+        sets.forEach((set) => {
+          const card = document.createElement('div');
+          card.className = 'set-card';
+          card.innerHTML = `
+            <h3>${escapeHtml(set.name)}</h3>
+            <p class="subtle">${escapeHtml(set.source_note || 'No source note')}</p>
+            <div class="meta">
+              <span class="pill">${set.question_count} questions</span>
+              <span class="pill">${set.attempt_count} attempts</span>
+              <span class="pill">${escapeHtml(set.topic_filter || 'All topics')}</span>
+            </div>
+            <p class="subtle">Created ${escapeHtml(formatDate(set.created_at))}</p>
+            <div class="actions">
+              <button class="primary-btn" type="button">Start Drill</button>
+            </div>
+          `;
+          card.querySelector('button').addEventListener('click', () => startDrill(set.id));
+          list.appendChild(card);
+        });
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    }
+
+    async function startDrill(quizSetId) {
+      try {
+        const attempt = await apiFetch('/api/attempts', {
+          method: 'POST',
+          body: JSON.stringify({ quiz_set_id: quizSetId })
+        });
+        const setDetails = await apiFetch(`/api/quiz-sets/${quizSetId}`);
+
+        state.currentAttemptId = attempt.id;
+        state.currentSet = setDetails;
+        state.currentQuestionIndex = 0;
+        state.selectedResponses = [];
+        state.answeredCurrentQuestion = false;
+        state.finalResult = null;
+
+        renderQuestion();
+        showScreen('quiz');
+      } catch (error) {
+        window.alert(error.message);
+      }
+    }
+
+    function renderQuestion() {
+      const question = state.currentSet.questions[state.currentQuestionIndex];
+      state.answeredCurrentQuestion = false;
+      state.currentQuestionStartedAt = Date.now();
+
+      document.getElementById('questionCounter').textContent = `Question ${state.currentQuestionIndex + 1} of ${state.currentSet.questions.length}`;
+      document.getElementById('runningScore').textContent = `Score: ${state.selectedResponses.filter((item) => item.isCorrect).length}`;
+      document.getElementById('quizProgress').style.width = `${((state.currentQuestionIndex + 1) / state.currentSet.questions.length) * 100}%`;
+      document.getElementById('questionStem').textContent = question.stem;
+      document.getElementById('nextQuestionBtn').style.display = 'none';
+
+      const tags = document.getElementById('questionTags');
+      tags.innerHTML = '';
+      [question.topic, question.type, question.lesson || 'No lesson'].forEach((label, index) => {
+        const span = document.createElement('span');
+        span.className = `tag${index === 1 ? ' alt' : ''}`;
+        span.textContent = label;
+        tags.appendChild(span);
+      });
+
+      const optionsList = document.getElementById('optionsList');
+      optionsList.innerHTML = '';
+      question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'option-btn';
+        button.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}.</span><span>${escapeHtml(option)}</span>`;
+        button.addEventListener('click', () => answerQuestion(index));
+        optionsList.appendChild(button);
+      });
+
+      const feedback = document.getElementById('feedbackBox');
+      feedback.className = 'feedback';
+      feedback.innerHTML = '';
+    }
+
+    async function answerQuestion(chosenIndex) {
+      if (state.answeredCurrentQuestion) {
+        return;
+      }
+
+      const question = state.currentSet.questions[state.currentQuestionIndex];
+      const buttons = Array.from(document.querySelectorAll('.option-btn'));
+      const timeMs = Date.now() - state.currentQuestionStartedAt;
+
+      state.answeredCurrentQuestion = true;
+
+      try {
+        await apiFetch(`/api/attempts/${state.currentAttemptId}/responses`, {
+          method: 'POST',
+          body: JSON.stringify({
+            question_id: question.id,
+            chosen_index: chosenIndex,
+            is_correct: false,
+            time_ms: timeMs
+          })
+        });
+      } catch (error) {
+        state.answeredCurrentQuestion = false;
+        window.alert(error.message);
+        return;
+      }
+
+      const isCorrect = chosenIndex === question.correct_index;
+      state.selectedResponses.push({
+        question,
+        chosenIndex,
+        chosenText: question.options[chosenIndex],
+        correctText: question.options[question.correct_index],
+        isCorrect,
+        timeMs
+      });
+
+      buttons.forEach((button, index) => {
+        button.disabled = true;
+        if (index === question.correct_index) {
+          button.classList.add('correct');
+        } else if (index === chosenIndex) {
+          button.classList.add('wrong');
+        }
+      });
+
+      const feedback = document.getElementById('feedbackBox');
+      feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+      feedback.innerHTML = `
+        <strong>${isCorrect ? 'Correct' : 'Not quite'}</strong>
+        <div>${isCorrect ? 'Nice work. You picked the right option.' : `You chose: ${escapeHtml(question.options[chosenIndex])}<br>Correct answer: ${escapeHtml(question.options[question.correct_index])}`}</div>
+        <div class="explanation">${escapeHtml(question.explanation || 'No explanation provided.')}</div>
+      `;
+
+      document.getElementById('runningScore').textContent = `Score: ${state.selectedResponses.filter((item) => item.isCorrect).length}`;
+      document.getElementById('nextQuestionBtn').style.display = 'block';
+    }
+
+    async function nextQuestion() {
+      if (state.currentQuestionIndex < state.currentSet.questions.length - 1) {
+        state.currentQuestionIndex += 1;
+        renderQuestion();
+        return;
+      }
+
+      try {
+        state.finalResult = await apiFetch(`/api/attempts/${state.currentAttemptId}/finish`, {
+          method: 'POST'
+        });
+        renderResults();
+        showScreen('results');
+      } catch (error) {
+        window.alert(error.message);
+      }
+    }
+
+    function renderResults() {
+      const score = state.finalResult || { score: 0, total: 0, pct: 0 };
+      document.getElementById('finalScore').textContent = `${score.score}/${score.total}`;
+      document.getElementById('finalPercent').textContent = pct(score.pct);
+
+      const timingStats = document.getElementById('attemptTimingStats');
+      const attemptDifficultyRows = document.getElementById('attemptDifficultyRows');
+      const timeValues = state.selectedResponses.map((item) => item.timeMs).filter((value) => Number.isFinite(value));
+      const totalTimeMs = timeValues.reduce((sum, value) => sum + value, 0);
+      const avgTimeMs = timeValues.length ? Math.round(totalTimeMs / timeValues.length) : 0;
+      timingStats.innerHTML = `
+        <div class="stat-chip"><span class="value">${formatDuration(totalTimeMs)}</span><span class="label">Total Time</span></div>
+        <div class="stat-chip"><span class="value">${formatDuration(avgTimeMs)}</span><span class="label">Average / Question</span></div>
+      `;
+
+      const byDifficulty = new Map();
+      state.selectedResponses.forEach((item) => {
+        const difficulty = item.question.difficulty || 'unspecified';
+        const entry = byDifficulty.get(difficulty) || { difficulty, correct: 0, total: 0 };
+        entry.total += 1;
+        if (item.isCorrect) {
+          entry.correct += 1;
+        }
+        byDifficulty.set(difficulty, entry);
+      });
+      attemptDifficultyRows.innerHTML = '';
+      if (byDifficulty.size === 0) {
+        attemptDifficultyRows.innerHTML = '<p class="subtle">No question timing or difficulty data yet.</p>';
+      } else {
+        Array.from(byDifficulty.values()).forEach((entry) => {
+          attemptDifficultyRows.appendChild(buildMetricRow(entry.difficulty, entry.correct, entry.total));
+        });
+      }
+
+      const byTopic = new Map();
+      state.selectedResponses.forEach((item) => {
+        const entry = byTopic.get(item.question.topic) || { topic: item.question.topic, correct: 0, total: 0 };
+        entry.total += 1;
+        if (item.isCorrect) {
+          entry.correct += 1;
+        }
+        byTopic.set(item.question.topic, entry);
+      });
+
+      const topicRows = document.getElementById('attemptTopicRows');
+      topicRows.innerHTML = '';
+      Array.from(byTopic.values()).forEach((entry) => {
+        topicRows.appendChild(buildMetricRow(entry.topic, entry.correct, entry.total));
+      });
+      if (byTopic.size === 0) {
+        topicRows.innerHTML = '<p class="subtle">No answered questions yet.</p>';
+      }
+
+      const missed = state.selectedResponses.filter((item) => !item.isCorrect);
+      const missedQuestions = document.getElementById('missedQuestions');
+      missedQuestions.innerHTML = '';
+      if (missed.length === 0) {
+        missedQuestions.innerHTML = '<p class="subtle">Perfect run. Nothing to review on this attempt.</p>';
+      } else {
+        missed.forEach((item) => {
+          const div = document.createElement('div');
+          div.className = 'review-item';
+          div.innerHTML = `
+            <h4>${escapeHtml(item.question.stem)}</h4>
+            <p><strong>Your answer:</strong> ${escapeHtml(item.chosenText)}</p>
+            <p><strong>Correct answer:</strong> ${escapeHtml(item.correctText)}</p>
+            <p>${escapeHtml(item.question.explanation || 'No explanation provided.')}</p>
+          `;
+          missedQuestions.appendChild(div);
+        });
+      }
+    }
+
+    async function showProgress() {
+      showScreen('progress');
+      try {
+        const [analytics, questionAnalytics] = await Promise.all([
+          apiFetch('/api/analytics'),
+          apiFetch('/api/analytics/questions?limit=5')
+        ]);
+        renderProgress(analytics, questionAnalytics);
+      } catch (error) {
+        document.getElementById('overallGrid').innerHTML = `<p class="subtle">${escapeHtml(error.message)}</p>`;
+      }
+    }
+
+    function renderProgress(analytics, questionAnalytics) {
+      document.getElementById('overallGrid').innerHTML = `
+        <div class="overall-stat"><span class="value">${analytics.overall.attempts}</span><span class="label">Attempts</span></div>
+        <div class="overall-stat"><span class="value">${analytics.overall.questions_answered}</span><span class="label">Answers</span></div>
+        <div class="overall-stat"><span class="value">${pct(analytics.overall.accuracy)}</span><span class="label">Accuracy</span></div>
+      `;
+
+      renderAnalyticsRows(document.getElementById('topicAnalytics'), analytics.by_topic, 'topic');
+      renderAnalyticsRows(document.getElementById('typeAnalytics'), analytics.by_type, 'type');
+      renderInsights(analytics, questionAnalytics);
+
+      const recent = document.getElementById('recentAttempts');
+      recent.innerHTML = '';
+      if (!analytics.recent_attempts.length) {
+        recent.innerHTML = '<p class="subtle">No finished attempts yet.</p>';
+        return;
+      }
+
+      analytics.recent_attempts.forEach((attempt) => {
+        const div = document.createElement('div');
+        div.className = 'recent-item';
+        div.innerHTML = `
+          <h4>${escapeHtml(attempt.set_name)}</h4>
+          <p><strong>Score:</strong> ${attempt.score}/${attempt.total}</p>
+          <p><strong>Finished:</strong> ${escapeHtml(formatDate(attempt.finished_at))}</p>
+        `;
+        recent.appendChild(div);
+      });
+    }
+
+    function renderInsights(analytics, questionAnalytics) {
+      const panel = document.getElementById('insightsPanel');
+      const weakestConcepts = analytics.by_concept.slice(0, 5);
+      panel.innerHTML = '';
+
+      if (!analytics.overall.questions_answered) {
+        panel.innerHTML = '<p class="subtle">No attempts yet.</p>';
+        return;
+      }
+
+      const difficultyCard = document.createElement('div');
+      difficultyCard.className = 'insight-item';
+      difficultyCard.innerHTML = '<h4>Accuracy by Difficulty</h4>';
+      const difficultyRows = document.createElement('div');
+      difficultyRows.className = 'row-list';
+      if (analytics.by_difficulty.length) {
+        analytics.by_difficulty.forEach((row) => {
+          difficultyRows.appendChild(buildMetricRow(row.difficulty, row.correct, row.total));
+        });
+      } else {
+        difficultyRows.innerHTML = '<p class="subtle">No difficulty-tagged responses yet.</p>';
+      }
+      difficultyCard.appendChild(difficultyRows);
+      panel.appendChild(difficultyCard);
+
+      const timingCard = document.createElement('div');
+      timingCard.className = 'insight-item';
+      timingCard.innerHTML = `
+        <h4>Timing</h4>
+        <p><strong>Overall average:</strong> ${analytics.timing.overall_avg_ms == null ? 'No timing data' : formatDuration(analytics.timing.overall_avg_ms)}</p>
+        <p><strong>Median:</strong> ${analytics.timing.median_ms == null ? 'No timing data' : formatDuration(analytics.timing.median_ms)}</p>
+      `;
+      panel.appendChild(timingCard);
+
+      const conceptCard = document.createElement('div');
+      conceptCard.className = 'insight-item';
+      conceptCard.innerHTML = '<h4>Weakest Concepts</h4>';
+      if (!weakestConcepts.length) {
+        conceptCard.innerHTML += '<p class="subtle">No concept-tagged misses yet.</p>';
+      } else {
+        weakestConcepts.forEach((row) => {
+          const line = document.createElement('p');
+          line.innerHTML = `<strong>${escapeHtml(row.concept)}</strong> · ${row.correct}/${row.total} · ${pct(row.accuracy)}`;
+          conceptCard.appendChild(line);
+        });
+      }
+      panel.appendChild(conceptCard);
+
+      const missedCard = document.createElement('div');
+      missedCard.className = 'insight-item';
+      missedCard.innerHTML = '<h4>Most-Missed Questions</h4>';
+      if (!questionAnalytics.length) {
+        missedCard.innerHTML += '<p class="subtle">No question-level analytics yet.</p>';
+      } else {
+        questionAnalytics.forEach((row) => {
+          const paragraph = document.createElement('p');
+          const distractor = row.top_distractor
+            ? `Top distractor: ${escapeHtml(row.top_distractor.text)} (${row.top_distractor.chosen_count})`
+            : 'Top distractor: none';
+          paragraph.innerHTML = `
+            <strong>${escapeHtml(row.stem)}</strong><br>
+            Accuracy ${pct(row.accuracy)} · Seen ${row.times_seen} times<br>
+            ${distractor}
+          `;
+          missedCard.appendChild(paragraph);
+        });
+      }
+      panel.appendChild(missedCard);
+    }
+
+    function renderAnalyticsRows(container, rows, key) {
+      container.innerHTML = '';
+      if (!rows.length) {
+        container.innerHTML = '<p class="subtle">No data yet.</p>';
+        return;
+      }
+      rows.forEach((row) => {
+        container.appendChild(buildMetricRow(row[key], row.correct, row.total));
+      });
+    }
+
+    function buildMetricRow(label, correct, total) {
+      const row = document.createElement('div');
+      row.className = 'metric-row';
+      const accuracy = total ? correct / total : 0;
+      row.innerHTML = `
+        <strong>${escapeHtml(label)}</strong>
+        <div class="metric-bar"><div class="metric-fill" style="width:${accuracy * 100}%"></div></div>
+        <span>${correct}/${total} · ${pct(accuracy)}</span>
+      `;
+      return row;
+    }
+
+    function formatDuration(ms) {
+      if (!Number.isFinite(ms) || ms <= 0) {
+        return '0s';
+      }
+      const totalSeconds = Math.round(ms / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      if (minutes === 0) {
+        return `${seconds}s`;
+      }
+      return `${minutes}m ${seconds}s`;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    loadQuizSets();
+  </script>
+</body>
+</html>

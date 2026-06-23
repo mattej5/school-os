@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Study app local data — never commit a student's records
+studyapp/study.db
+studyapp/study.db.*
+studyapp/*.db
+studyapp/round*.json
+
+# Node
+node_modules/
+npm-debug.log*
