@@ -14,7 +14,7 @@ Read the full thinking in [PROPOSAL.md](PROPOSAL.md).
 
 ## What's in here
 
-Four student-facing skills, one shared comprehension primitive they reuse, and one record that ties it all together.
+Five student-facing skills, one shared comprehension primitive they reuse, and one record that ties it all together.
 
 | Skill | What it does | Integrity mechanism |
 |---|---|---|
@@ -22,6 +22,7 @@ Four student-facing skills, one shared comprehension primitive they reuse, and o
 | **[adaptive-quiz](skills/adaptive-quiz/SKILL.md)** | Escalating rounds of five, explains every miss, won't declare you "ready" until you clear a threshold across consecutive rounds, then issues a full practice exam. | Pure assessed-load — no gate needed. |
 | **[study-guide-cowriter](skills/study-guide-cowriter/SKILL.md)** | Turns the student's *own* understanding into a formatted, submittable deliverable — only after they've explained it. | Runs the Comprehension Gate before drafting. |
 | **[weakness-tracker](skills/weakness-tracker/SKILL.md)** | Persistent memory of every miss and weak concept; surfaces patterns before exams; builds dated study plans. | Tracks and schedules; never completes graded work. |
+| **[baseline-check](skills/baseline-check/SKILL.md)** | Point it at something you shipped with AI. It probes the decisions in it, one at a time, and scores how much you can still explain unaided — then hands you drills and a number that moves on the re-run. | Measures explain-rate over your own artifact. Never detects, never judges whether AI was used — it assumes it was. |
 
 **Shared primitives** (in [`shared/`](shared/)):
 
@@ -42,7 +43,7 @@ cd school-os
 ./install.sh
 ```
 
-`install.sh` symlinks the four skills into `~/.claude/skills/` (override with `CLAUDE_SKILLS_DIR`). Symlinks keep the skills resolving their shared specs from inside this repo and let `git pull` update them in place — so keep the repo where you cloned it.
+`install.sh` symlinks the skills into `~/.claude/skills/` (override with `CLAUDE_SKILLS_DIR`). Symlinks keep the skills resolving their shared specs from inside this repo and let `git pull` update them in place — so keep the repo where you cloned it.
 
 To use the study-drills app (optional, needs **Node v26**, no `npm install`):
 
@@ -60,6 +61,7 @@ Once installed, just talk to Claude Code about your coursework — the skills tr
 - "Quiz me for the midterm" / "am I ready?" → **adaptive-quiz**
 - "Help me write up this discussion post" → **study-guide-cowriter**
 - "What should I study this week?" → **weakness-tracker**
+- "Can I actually explain this code I shipped?" / "check my baseline" → **baseline-check**
 
 The Learning Ledger and Weakness Tracker write to *your* Notion. They need a Notion connection in Claude Code (via the Notion MCP); without it, the skills still tutor, quiz, and draft — they just can't persist the provenance record across sessions.
 
@@ -68,6 +70,8 @@ The Learning Ledger and Weakness Tracker write to *your* Notion. They need a Not
 ## The design constraint: course-agnostic
 
 Nothing is hardcoded to a specific course. The student (or Claude, by reading a syllabus or assignment) supplies the subject, the assignment, and — critically — the *assessed skill*. The skills operate on that input. The example payloads in `studyapp/` use a marketing course only as illustration.
+
+**[`courses/`](courses/)** holds the human/session-context layer instead: per-class source materials and durable facts (syllabus, Canvas link, materials) so a fresh session in this repo has the same picture of the current semester without re-deriving it. The skills above never read this directory — it's for Claude and Vin, not for the skill logic.
 
 ---
 
