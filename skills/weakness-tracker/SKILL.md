@@ -38,7 +38,7 @@ When the student asks what to study, or before an exam:
 
 1. Read the ledger and quiz-miss history for the relevant course.
 2. **Find patterns, not just a list of misses.** Cluster by topic, by concept, and by *type of error*. The valuable output is "you keep confusing disposable vs. discretionary income" or "you miss application questions but ace recall," not "here are 12 wrong answers."
-3. Rank by a combination of frequency, recency, and exam weight.
+3. Rank by a combination of frequency, recency, and exam weight. When source material (slides, lecture notes) is available, factor in the repetition signal (`../../shared/repetition-signal.md`) — concepts the professor repeats across slides or sessions are higher-priority review items.
 4. Output a prioritized, specific review list — and offer to launch the right skill for the top item (e.g., "Want me to drill you on the weak topic, or tutor the concept first?").
 
 ## Mode 2 — Plan and schedule

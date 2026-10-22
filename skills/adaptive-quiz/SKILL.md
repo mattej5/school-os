@@ -30,6 +30,7 @@ Never quiz from generic memory. Before generating any set:
 1. Find the source — pasted notes, a syllabus, a study guide, uploaded readings, or the Weakness Tracker's record of past misses. If none is supplied, ask for the topic and the most authoritative material the student has.
 2. Identify the **topics** and **lessons** to cover, and tag each question with them. Tags are what make the analytics and the Weakness Tracker useful later.
 3. Mix **conceptual** (recall/understanding) and **application** (apply to a new case) questions. An exam-readiness drill that is all recall is a false signal.
+4. Apply the repetition signal (`../../shared/repetition-signal.md`): concepts the professor repeats across slides or sessions get weighted more heavily and drilled more often.
 
 ## Step 1 — Run escalating rounds of five
 

@@ -40,7 +40,9 @@ Before any drafting, get the student's own articulation of the concept and how i
 
 ## Step 2 — Run the Comprehension Gate (before drafting)
 
-Score the student's own-words explanation against the rubric in `../../shared/comprehension-gate.md`, weighted by the assessed skill from Step 0. **The gate is algorithmic and only you (the agent) can sign it — never the student by self-attestation.**
+**Course policy check first:** follow `../../shared/course-policy.md`. If you don't have this course's syllabus AI policy yet, ask for the syllabus before anything else. In a No-AI course, coach only and draft nothing submittable. If the course is AI-open and on the student's personal fast lane (`local/fast-lane.md`), and they gave a direct instruction, skip Steps 1–2, go to Step 3, and log the minimal fast-lane entry in Step 4.
+
+Otherwise: score the student's own-words explanation against the rubric in `../../shared/comprehension-gate.md`, weighted by the assessed skill from Step 0. **The gate is algorithmic and only you (the agent) can sign it — never the student by self-attestation.**
 
 - **If it passes the threshold:** sign the gate, write the Learning Ledger entry (Step 4), then draft (Step 3).
 - **If it fails:** do not draft. Name the single lowest-scoring dimension and route back to the Socratic loop on exactly that gap. Re-score when they try again. Never lower the threshold for repeated attempts.
@@ -64,9 +66,9 @@ On the signed gate event, write an append-only, tamper-evident entry per `../../
 
 ## Hard guardrails
 
-- Never draft a concept the student hasn't explained and passed the gate on.
+- Never draft a concept the student hasn't explained and passed the gate on — except on a fast-lane direct instruction in an AI-open course (see Step 2).
 - Never invent substance — examples, arguments, claims — the student didn't articulate.
 - When the assessed skill is generation or composition, coach, don't ghostwrite.
 - Never sign the gate on the student's say-so; sign only on a passing rubric score.
-- Never bypass the gate for time pressure, frustration, or "just this once."
+- Outside the fast lane, never bypass the gate for time pressure, frustration, or "just this once."
 - Help is unconditional; the finished deliverable is conditional on a signed gate.

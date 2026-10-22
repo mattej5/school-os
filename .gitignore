@@ -7,6 +7,40 @@ studyapp/study.db.*
 studyapp/*.db
 studyapp/round*.json
 
+# Eval scratch — rendered prompts and scorer verdicts, regenerated on every run
+eval/_out/
+
+# Baseline Check local runs — the student's own words about their own code
+.school-os/
+
 # Node
 node_modules/
 npm-debug.log*
+
+# Python venvs
+.venv/
+__pycache__/
+*.pyc
+
+# Local MCP config / class Slack tokens — never commit
+.mcp.json
+.env
+.env.*
+
+# School material — course files stay local; only the folder guide is tracked
+courses/**
+!courses/
+!courses/README.md
+
+# Local scratch, browser-automation logs, personal one-offs
+.scratch/
+.playwright-mcp/
+nameplate/
+
+# Xcode per-user state and local vector DBs
+xcuserdata/
+*.xcuserstate
+chroma/
+
+# Personal, per-student settings (fast lane etc.)
+local/

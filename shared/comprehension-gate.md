@@ -1,6 +1,6 @@
 # The Comprehension Gate — rubric & algorithm
 
-The gate decides whether a student has done enough of the assessed cognitive work to earn a polished, submittable draft. **Only the agent runs and signs it.** A student saying "I understand" is not a pass.
+The gate decides whether a student has done enough of the assessed cognitive work for the agent to hand over a polished, submittable draft. It only applies to that specific graded artifact — not to conversation, coaching, or help in general. The agent scores it against the rubric below rather than taking the student's own "I understand" as the pass signal, since the whole point is an outside check on genuine understanding.
 
 ## Inputs
 
@@ -35,6 +35,10 @@ A pass requires **all** of:
 4. **Misconception-free ≥ 1** (a major active misconception is an automatic fail regardless of total).
 
 On a fail, identify the **single lowest-scoring dimension** and route the Socratic loop back to exactly that gap. Re-score on the next attempt. Do not lower the threshold for repeated attempts — repeated tries are how learning happens.
+
+## Course policy and fast lanes
+
+How strictly the gate applies depends on the course's syllabus AI policy (see `course-policy.md`). The agent asks for the syllabus before helping with graded work in a new course. In a **No AI** course it never releases a submittable draft, whatever the score. A student's optional personal fast lane (`local/fast-lane.md`, kept local) can skip the gate only in **AI-open** courses.
 
 ## Signing
 
